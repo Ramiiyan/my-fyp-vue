@@ -10,10 +10,10 @@ Vue.config.productionTip = false
 
 // Vue.use(socket);
 
-const socket = io.connect('http://localhost:5000', {
-  transports: ['websocket'],
-});
-// const socket = io.connect('http://localhost:5000');
+// const socket = io.connect('http://localhost:5000', {
+//   transports: ['websocket'],
+// });
+const socket = io.connect('http://localhost:5000');
 
 Vue.prototype.$socket = socket;
 // Vue.use(VueSocketIOExt,socket);

@@ -26,10 +26,10 @@
       </div>
 
       <v-spacer></v-spacer>
-      <v-btn flat>
+      <v-btn text>
         <router-link to="/">Home</router-link>
       </v-btn>
-      <v-btn flat>
+      <v-btn text>
         <router-link to="/about">About</router-link>
       </v-btn>
       
