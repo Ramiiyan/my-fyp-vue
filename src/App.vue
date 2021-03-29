@@ -26,11 +26,14 @@
       </div>
 
       <v-spacer></v-spacer>
-      <v-btn text>
+      <v-btn>
         <router-link to="/">Home</router-link>
       </v-btn>
-      <v-btn text>
-        <router-link to="/about">About</router-link>
+      <v-btn>
+        <router-link to="/ArmMonitor">ArmMonitor</router-link>
+      </v-btn>
+      <v-btn>
+        <router-link to="/ArmController">ArmController</router-link>
       </v-btn>
       
     </v-app-bar>
