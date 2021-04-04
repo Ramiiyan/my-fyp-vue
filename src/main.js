@@ -1,7 +1,9 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
 import vuetify from './plugins/vuetify';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 // import VueSocketIOExt from 'vue-socket.io-extended';
 // import io from 'socket.io';
 import * as io from 'socket.io-client';
@@ -13,6 +15,7 @@ Vue.config.productionTip = false
 // const socket = io.connect('http://localhost:5000', {
 //   transports: ['websocket'],
 // });
+Vue.use(VueAxios,axios);
 const socket = io.connect('http://localhost:5000');
 
 Vue.prototype.$socket = socket;

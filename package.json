@@ -8,11 +8,13 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "engine.io": "3.3.0",
     "socket.io": "3.1.1",
     "socket.io-client": "3.1.1",
     "vue": "^2.6.11",
+    "vue-axios": "^3.2.4",
     "vue-router": "^3.2.0",
     "vue-socket.io-extended": "^4.0.6",
     "vuetify": "^2.4.0"

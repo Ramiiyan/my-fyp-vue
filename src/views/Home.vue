@@ -1,18 +1,233 @@
 <template>
   <div class="home">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    hello world !
+    <h2> Robotic arm Specification</h2>
+    <v-form ref="specification">
+    <v-container fluid>
+    <v-row>
+      <v-col class="d-flex" cols="8" sm="6">
+        <v-select v-model="microC" :items="microCTypes" dense
+          label="Micro Controller" :rules="[rules.required]">
+        </v-select>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="d-flex" cols="8" sm="6">
+        <v-select v-model="comModule" :items="comModuleTypes" dense
+          label="Communcation Modules" :rules="[rules.required]">
+        </v-select>
+      </v-col>
+      <!-- TX RX PINS -->
+      <v-col v-if="this.comModule != null" cols="4" sm="6">
+        <v-row 
+          v-if="this.microC ==='ESP WROOM32 DEV KIT' || this.microC ==='ESP32S'">
+          <v-col class="d-flex" cols="2" sm="3">
+            <v-text-field label="TX Pin" value="17" 
+              readonly dense>
+            </v-text-field>
+          </v-col>
+          <v-col class="d-flex" cols="2" sm="3">
+            <v-text-field label="RX Pin" value="16"
+              readonly dense
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row v-else-if="this.microC ==='Arduino UNO R3'">
+          <v-col class="d-flex" cols="2" sm="3">
+            <v-text-field label="TX Pin" value="7"
+              readonly dense
+            ></v-text-field>
+          </v-col>
+          <v-col class="d-flex" cols="2" sm="3">
+            <v-text-field label="RX Pin" value="8"
+              readonly dense
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row v-else> Select micro Controller</v-row>
+      </v-col>
+      <v-col v-else> Select Com</v-col>
+    </v-row>
+    <v-row>
+      <v-col class="d-flex" cols="8" sm="6">
+        <v-select v-model="dof" :items="dofTypes" dense
+          label="Degree Of Freedom" :rules="[rules.required]">
+        </v-select>
+      </v-col>
+    </v-row>
+    <!-- EACH SERVO SETTINGS -->
+    <v-row v-if="this.dof != null">
+      <!-- <DofRow 
+        :dofCount="this.selectedDof" 
+        :getDofRow="this.getDofRow"  
+        @sub-row="DofRowValues"
+      /> -->
+      
+      <v-row v-for="i in this.dof" :key="i">
+        <v-col cols="2" dense>
+          <v-subheader> Servo {{i}} : </v-subheader>
+        </v-col>
+        <v-col cols="2" dense>
+          <v-select
+            v-model="dofRow.selectedType[i-1]"
+            label="Type"
+            :items="servoTypes"
+            :rules="[rules.required]"
+          ></v-select>
+        </v-col>
+        <v-col cols="2" dense>
+          <v-text-field
+            v-model="dofRow.range.min[i-1]"
+            label="Min"
+            :rules="[rules.required, rules.rangeRule]"
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col cols="2" dense>
+          <v-text-field
+            v-model="dofRow.range.max[i-1]"
+            label="Max"
+            :rules="[rules.required, rules.rangeRule]"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="2" dense>
+          <v-text-field
+            label="Digital PIN"
+            :value="Dpins[i-1]"
+            disabled
+          ></v-text-field>
+        </v-col>
+        <v-col cols="2" dense>
+          <v-text-field
+            label="Analog PIN"
+            :value="Apins[i-1]"
+            disabled
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+    </v-row>
+    <!-- WIFI SETTINGS -->
+    <div v-if="this.comModule === 'WiFi'">
+      <h4>WiFi Settings</h4>
+      <v-col class="d-flex" cols="8" sm="6">
+        <v-text-field v-model="wifi.username" label="Wifi Username"
+            :rules="[rules.required]" required dense>
+        </v-text-field>
+      </v-col>
+      <v-col class="d-flex" cols="8" sm="6">
+        <v-text-field
+            v-model="wifi.password"
+            label="Wifi Password"
+            :rules="[rules.required]"
+            required
+            dense
+          ></v-text-field>
+      </v-col>
+    </div>
+    <div v-else></div>
+    <v-row>
+      <v-col 
+        class="d-flex"
+        cols="12"
+        sm="6"
+      >
+        <v-btn v-on:click="submit">
+          submit
+        </v-btn>
+      </v-col>
+    </v-row>
+    </v-container>
+    </v-form>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-
+// import DofRow from "@/components/DofRow.vue";
 export default {
   name: 'Home',
+  data: () => ({
+    microC: "ESP WROOM32 DEV KIT",
+    dof: null,
+    comModule: "SIMCOM 7000",
+    // getDofRow:false,
+    // dofRowObj: null,
+    dofRow: {
+      selectedType: [],
+      range: {
+        min: [],
+        max: []
+      },
+    },
+    wifi:{
+      username:null,
+      password:null
+    },
+    // List of Options
+    dofTypes: [2, 3, 4, 5, 6],
+    microCTypes:['ESP32S', 'ESP WROOM32 DEV KIT', 'Arduino UNO R3'],
+    comModuleTypes:['SIMCOM 7000','WiFi'],
+    servoTypes:['Micro servo 9g','Micro servo 90S'],
+    Dpins:[13, 14, 15, 16, 17, 18],
+    Apins:[20, 21, 22, 23, 24, 25, 26],
+    rules: {
+      required: value => !!value || "Required.",
+      rangeRule: v  => {
+      // if (!v.trim()) return true;
+        if (!isNaN(parseFloat(v)) && v >= 0 && v <= 360) return true;
+        return 'Range has to be between 0 and 360';
+      },
+
+    },
+    
+  }),
   components: {
-    // HelloWorld
+    // DofRow,
+  },
+  // watch:{
+  //   selectedDof:function(val) {
+  //     console.log("on watch:" + val);
+  //   },
+  // },
+  methods:{
+    async sendRovoSpecs(url, msg) {
+       return await this.axios.post(url,msg)
+        .then(response => {
+          console.log(response);
+        });
+    },
+    // async triggerEmit(){
+    //   this.getDofRow = true; //triggering to get sub form (DofRow.vue)
+    //   return 1;
+    // },
+    // async DofRowValues(values){
+    //   this.dofRowObj = await values;
+    //   console.log(this.dofRowObj);
+    // },
+    
+    async submit(){
+      // const result = await this.triggerEmit();
+      // console.log(result);
+      const validateForm = this.$refs.specification.validate();
+      const msg = { 
+        dof: this.dof,
+        dofRowObj: this.dofRow,
+      };
+      console.log(msg);
+      
+      if(validateForm){
+        await this.sendRovoSpecs("http://localhost:5000/rovoSpec",msg);
+      }
+      
+
+      
+      
+      
+    },
+    
+    
   }
 }
 </script>
