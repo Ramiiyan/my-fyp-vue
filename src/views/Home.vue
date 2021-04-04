@@ -69,7 +69,7 @@
         </v-col>
         <v-col cols="2" dense>
           <v-select
-            v-model="dofRow.selectedType[i-1]"
+            v-model="dofRow.selected_type[i-1]"
             label="Type"
             :items="servoTypes"
             :rules="[rules.required]"
@@ -77,7 +77,7 @@
         </v-col>
         <v-col cols="2" dense>
           <v-text-field
-            v-model="dofRow.range.min[i-1]"
+            v-model="dofRow.servo_range.min_range[i-1]"
             label="Min"
             :rules="[rules.required, rules.rangeRule]"
             required
@@ -85,7 +85,7 @@
         </v-col>
         <v-col cols="2" dense>
           <v-text-field
-            v-model="dofRow.range.max[i-1]"
+            v-model="dofRow.servo_range.max_range[i-1]"
             label="Max"
             :rules="[rules.required, rules.rangeRule]"
           ></v-text-field>
@@ -155,10 +155,10 @@ export default {
     // getDofRow:false,
     // dofRowObj: null,
     dofRow: {
-      selectedType: [],
-      range: {
-        min: [],
-        max: []
+      selected_type: [],
+      servo_range: {
+        min_range: [],
+        max_range: []
       },
     },
     wifi:{
@@ -211,9 +211,12 @@ export default {
       // const result = await this.triggerEmit();
       // console.log(result);
       const validateForm = this.$refs.specification.validate();
-      const msg = { 
+      const msg = {
+        micro_c: this.microC,
+        com_module: this.comModule,
         dof: this.dof,
-        dofRowObj: this.dofRow,
+        dof_row_obj: this.dofRow,
+        wifi: this.wifi,
       };
       console.log(msg);
       
