@@ -155,10 +155,10 @@ export default {
     // getDofRow:false,
     // dofRowObj: null,
     dofRow: {
-      selected_type: [],
+      selected_type: ['Micro servo 9g','Micro servo 90S'],
       servo_range: {
-        min_range: [],
-        max_range: []
+        min_range: [1,180],
+        max_range: [1,180]
       },
     },
     wifi:{
@@ -170,8 +170,8 @@ export default {
     microCTypes:['ESP32S', 'ESP WROOM32 DEV KIT', 'Arduino UNO R3'],
     comModuleTypes:['SIMCOM 7000','WiFi'],
     servoTypes:['Micro servo 9g','Micro servo 90S'],
-    Dpins:[13, 14, 15, 16, 17, 18],
-    Apins:[20, 21, 22, 23, 24, 25, 26],
+    Dpins:[12, 26, 15, 16, 17, 18],
+    Apins:[13, 21, 22, 23, 24, 25, 26],
     rules: {
       required: value => !!value || "Required.",
       rangeRule: v  => {
@@ -193,10 +193,26 @@ export default {
   // },
   methods:{
     async sendRovoSpecs(url, msg) {
-       return await this.axios.post(url,msg)
-        .then(response => {
-          console.log(response);
-        });
+      //  return await this.axios.post(url,msg)
+      //   .then(response => {
+      //     console.log(response);
+      //   });
+      return await this.axios({
+        url: url,
+        method: 'POST',
+        responseType: 'arraybuffer',
+        data: msg,
+      }).then((res) =>{
+        let data = res.data;
+        console.log(res);
+        const blob = new Blob([data], { type: 'application/zip' });
+        let link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);  
+        link.download = 'firmware_v1.0.zip';
+        link.click()
+      }).catch(error =>{
+        console.error(error);
+      });
     },
     // async triggerEmit(){
     //   this.getDofRow = true; //triggering to get sub form (DofRow.vue)
