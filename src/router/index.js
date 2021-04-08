@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import ArmController from '../views/ArmController.vue'
 import ArmMonitor from '../views/ArmMonitor.vue'
+import modelTest from '../views/modelTest.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,13 @@ const routes = [
     path: '/ArmController',
     name: 'ArmController',
     component: ArmController
+  },
+  {
+    path: '/test',
+    name: 'modelTest',
+    component: modelTest
   }
+
 ]
 
 const router = new VueRouter({

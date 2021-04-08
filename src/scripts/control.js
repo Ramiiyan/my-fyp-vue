@@ -537,8 +537,6 @@ function nextMode(){
 	}
 	
 	mode++;
-	
-	
 }
 
 // LCD Display Function ----------------

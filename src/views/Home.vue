@@ -126,15 +126,63 @@
       </v-col>
     </div>
     <div v-else></div>
+    <!-- MQTT SETTINGS -->
+    <v-card elevation="6" dense>
+      <v-row>
+        <v-col cols="4" sm="4">
+          <v-card-title>MQTT Settings</v-card-title>
+        </v-col>
+        <v-col cols="6" sm="6">
+          <v-checkbox v-model="MQTT_default" color="indigo" 
+            label="Platform MQTT Broker (Default)" hide-details dense >
+          </v-checkbox>
+        </v-col>
+      </v-row>
+      <v-card-text v-if="!this.MQTT_default">
+        <v-row>
+          <v-col class="d-flex" cols="6" sm="6">
+            <v-text-field v-model="mqtt_config.host" label="Host"
+              :rules="[rules.required]" required dense>
+            </v-text-field>
+          </v-col>
+          <v-col class="d-flex" cols="3" sm="3">
+            <v-text-field v-model="mqtt_config.port" label="Port"
+              :rules="[rules.required]" required dense >
+            </v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="d-flex" cols="6" sm="6">
+            <v-text-field v-model="mqtt_config.username" label="Username"
+              :rules="[rules.required]" required dense >
+            </v-text-field>
+          </v-col>
+          <v-col class="d-flex" cols="6" sm="6">
+            <v-text-field v-model="mqtt_config.password" label="Password"
+              :rules="[rules.required]" required dense >
+            </v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="d-flex" cols="6" sm="6">
+            <v-text-field v-model="mqtt_config.pub_topic" required dense
+              label="Pubish Topic (Controller)"
+              :rules="[rules.required]" >
+            </v-text-field>
+          </v-col>
+          <v-col class="d-flex" cols="6" sm="6">
+            <v-text-field v-model="mqtt_config.sub_topic" required dense
+              label="Subscribe Topic (Monitor)"
+              :rules="[rules.required]" >
+            </v-text-field>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    <br>
     <v-row>
-      <v-col 
-        class="d-flex"
-        cols="12"
-        sm="6"
-      >
-        <v-btn v-on:click="submit">
-          submit
-        </v-btn>
+      <v-col class="d-flex" cols="12" sm="6">
+        <v-btn v-on:click="submit;"> submit </v-btn>
       </v-col>
     </v-row>
     </v-container>
@@ -152,6 +200,7 @@ export default {
     microC: "ESP WROOM32 DEV KIT",
     dof: null,
     comModule: "SIMCOM 7000",
+    MQTT_default: true,
     // getDofRow:false,
     // dofRowObj: null,
     dofRow: {
@@ -164,6 +213,14 @@ export default {
     wifi:{
       username:null,
       password:null
+    },
+    mqtt_config:{
+      host:null,
+      port:null,
+      username:null,
+      password:null,
+      pub_topic:null,
+      sub_topic:null
     },
     // List of Options
     dofTypes: [2, 3, 4, 5, 6],
@@ -233,19 +290,16 @@ export default {
         dof: this.dof,
         dof_row_obj: this.dofRow,
         wifi: this.wifi,
+        mqtt_default:this.MQTT_default,
+        mqtt_config: this.mqtt_config
       };
       console.log(msg);
       
       if(validateForm){
         await this.sendRovoSpecs("http://localhost:5000/rovoSpec",msg);
       }
-      
 
-      
-      
-      
     },
-    
     
   }
 }
