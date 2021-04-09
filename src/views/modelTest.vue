@@ -103,27 +103,27 @@
 <script>
 // import $ from '../scripts/jquery'
 import baseImg from '@/assets/armModel/base.png'
-// import joint1Img from '@/assets/armModel/joint1.png'
-// import joint2Img from '@/assets/armModel/joint2.png'
-// import joint3Img from '@/assets/armModel/joint3.png'
-// import joint4Img from '@/assets/armModel/joint4.png'
-// import joint5Img from '@/assets/armModel/joint5.png'
-// import joint6Img from '@/assets/armModel/joint6.png'
-// import elbowImg from '@/assets/armModel/elbow.png'
-// import armImg from '@/assets/armModel/arm.png'
+import joint1Img from '@/assets/armModel/joint1.png'
+import joint2Img from '@/assets/armModel/joint2.png'
+import joint3Img from '@/assets/armModel/joint3.png'
+import joint4Img from '@/assets/armModel/joint4.png'
+import joint5Img from '@/assets/armModel/joint5.png'
+import joint6Img from '@/assets/armModel/joint6.png'
+import elbowImg from '@/assets/armModel/elbow.png'
+import armImg from '@/assets/armModel/arm.png'
 export default {
     name: 'modelTest',
     data: () => ({
         surface: null,
         base: new Image(),
-        // joint1: new Image(),
-        // joint2: new Image(),
-        // joint3: new Image(),
-        // joint4: new Image(),
-        // joint5: new Image(),
-        // joint6: new Image(),
-        // elbow: new Image(),
-        // arm: new Image(),
+        joint1: new Image(),
+        joint2: new Image(),
+        joint3: new Image(),
+        joint4: new Image(),
+        joint5: new Image(),
+        joint6: new Image(),
+        elbow: new Image(),
+        arm: new Image(),
         angle2: 0,
         angle3: 0,
         angle5: 0,
@@ -132,55 +132,53 @@ export default {
         mode: 0,
     }),
     mounted(){
-        this.func();
-        // this.joint2.src= joint2Img;
-        // this.joint3.src= joint3Img;
-        // this.joint4.src= joint4Img;
-        // this.joint5.src= joint5Img;
-        // this.joint6.src= joint6Img;
-        // this.joint1.src= joint1Img;
-        // this.elbow.src= elbowImg;
-        // this.base.src= baseImg;
-        // this.arm.src= armImg;
-        // this.drawCanvas();
-        // this.nextMode();
+        this.drawCanvas();
     },
     created(){
 
     },
     methods:{
-        func(){
+        drawCanvas(){
             this.surface = this.$refs.myCanvas;
             this.surfaceContext = this.surface.getContext("2d");  
             // let bg = new Image();
+            this.joint1.src= joint1Img;
+            this.joint1.onload =()=> {
+                this.drawJoint1();
+            };    
             this.base.src= baseImg;
-            this.base.onload = ()=> {
-                this.surfaceContext.drawImage(this.base, 15, 300);
+            this.base.onload =()=> {
+                this.drawBase();
             };
-        },
-        drawCanvas() {
-            // var c = document.getElementById("myCanvas");
-            this.surface = this.$refs.myCanvas;
-            if (this.surface.getContext) {
-                this.surfaceContext = this.surface.getContext('2d');
-                console.log("my canvas");
-                this.initializeAll();
-                
-            }
-        },
-        initializeAll() {
-            // Draws the arm in initial state
-            this.surfaceContext = this.surface.getContext('2d');
-            // console.log(this.surfaceContext); 
-            this.drawJoint1();
-            this.drawBase();
-            this.drawArm();
-            this.drawElbow();
-            this.drawJoint6();
-            this.drawJoint2();
-            this.drawJoint3();
-            this.drawJoint4();
-            this.drawJoint5();
+            this.arm.src= armImg;
+            this.arm.onload =()=> {
+                this.drawArm();
+            };
+            this.elbow.src= elbowImg;
+            this.elbow.onload =()=> {
+                this.drawElbow();
+            };
+            this.joint2.src= joint2Img;
+            this.joint2.onload =()=> {
+                this.drawJoint2();
+            };
+            this.joint3.src= joint3Img;
+            this.joint3.onload =()=> {
+                this.drawJoint3();
+            };
+            this.joint4.src= joint4Img;
+            this.joint4.onload =()=> {
+                this.drawJoint4();
+            };
+            this.joint5.src= joint5Img;
+            this.joint5.onload =()=> {
+                this.drawJoint5();
+            };
+            this.joint6.src= joint6Img;
+            this.joint6.onload =()=> {
+                this.drawJoint6();
+            };
+            
         },
         drawJoint2(){
             // console.log("drawJoint2:before");
