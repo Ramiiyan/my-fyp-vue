@@ -158,9 +158,7 @@
             </v-text-field>
           </v-col>
           <v-col class="d-flex" cols="6" sm="6">
-            <v-text-field v-model="mqtt_config.password" label="Password"
-              :rules="[rules.required]" required dense >
-            </v-text-field>
+
           </v-col>
         </v-row>
         <v-row>
@@ -182,7 +180,7 @@
     <br>
     <v-row>
       <v-col class="d-flex" cols="12" sm="6">
-        <v-btn v-on:click="submit;"> submit </v-btn>
+        <v-btn v-on:click="submit"> submit </v-btn>
       </v-col>
     </v-row>
     </v-container>
@@ -227,8 +225,8 @@ export default {
     microCTypes:['ESP32S', 'ESP WROOM32 DEV KIT', 'Arduino UNO R3'],
     comModuleTypes:['SIMCOM 7000','WiFi'],
     servoTypes:['Micro servo 9g','Micro servo 90S'],
-    Dpins:[12, 26, 15, 16, 17, 18],
-    Apins:[13, 21, 22, 23, 24, 25, 26],
+    Dpins:[12, 26, 32, 14, 18, 22],
+    Apins:[13, 27, 33, 25, 19, 23],
     rules: {
       required: value => !!value || "Required.",
       rangeRule: v  => {

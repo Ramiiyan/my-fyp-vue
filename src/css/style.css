@@ -196,7 +196,7 @@ input {
 }
 
 #tempButtons {
-		display: none;
+		display:inline-grid;
 		margin: 100px;
 }
 

@@ -46,7 +46,7 @@
 				<a href="#" onclick="selectMe('step');lcdDisplay()"><div id="stepButton" class="functionButton"><p>STEP</p></div></a>
 				</div>
 				
-				<div id="secondContainer">
+				<!-- <div id="secondContainer">
 				<a href="#" onclick="nextMode();"><div id="manHalt" class="functionButton"><p>MAN<br/>HALT</p></div></a>
 				<a href="#"><div id="" class="functionButton"><p>COM<br/>PWR</p></div></a>
 				<a href="#"><div id="" class="functionButton"><p>YES</p></div></a>
@@ -72,7 +72,7 @@
 				<a href="#"><div id="" class="functionButton"><p>4</p></div></a>
 				<a href="#"><div id="" class="functionButton"><p>1</p></div></a>
 				<a href="#"><div id="" class="functionButton"><p>0</p></div></a>
-				</div>
+				</div> -->
 			
 				<div id="reverseButtons">
 					<a href="#" onmousedown="reverse('1')" onmouseup="buttonReleased()"><div id="slow1" class="reverseButton"></div></a>
@@ -83,7 +83,7 @@
 					<span id="minusSign">-</span>
 				</div>
 				
-				<div id="forwardButtons">
+				<!-- <div id="forwardButtons">
 					<span id="plusSign">+</span>
 					<div id="forwardContainer">
 					<a href="#" onmousedown="forward('1')" onmouseup="buttonReleased()"><div id="fast1" class="forwardButton"></div></a>
@@ -92,11 +92,11 @@
 					<a href="#" onmousedown="forward('4')" onmouseup="buttonReleased()"><div id="fast4" class="forwardButton"></div></a>
 					<a href="#" onmousedown="forward('5')" onmouseup="buttonReleased()"><div id="fast5" class="forwardButton"></div></a>
 					</div>
-				</div>
+				</div> -->
 				
-				<div id="tempButtons">
+				<div id="tempButtons" style="display:block">
 			
-				<input type="button" value="Rotate Joint 2" onmousedown="buttonClicked()" onmouseup="buttonReleased()" oncontextmenu="return false" />
+				<input type="button" value="Rotate Joint 2" onmousedown="buttonClicked()" onmouseup="buttonReleased()"/>
         		<input type="button" value="Reverse Joint 2" onmousedown="buttonClickedBack()" onmouseup="buttonReleased()" oncontextmenu="return false"/><br/><br/>
         
         		<input type="button" value="Rotate Joint 3" onmousedown="joint3Clicked()" onmouseup="buttonReleased()" oncontextmenu="return false"/>

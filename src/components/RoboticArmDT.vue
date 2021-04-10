@@ -2,24 +2,24 @@
   <div class="modelTest">
     <div id="contentWrapper" class="container_12">
 
-		<v-text-field v-model="angle2" label="J1" dense ></v-text-field>
+		<!-- <v-text-field v-model="angle2" label="J1" dense ></v-text-field>
 		<v-text-field v-model="angle3" label="J2" dense ></v-text-field>
 		<v-text-field v-model="angle5" label="J3" dense ></v-text-field>
 
 		{{this.angle2}}
 		{{this.angle3}}
-		{{this.angle5}}
-		<div id="tempButtons">
+		{{this.angle5}} -->
+		<!-- <div id="tempButtons">
 			<input type="button" value="Rotate Joint 2" v-on:click="rotate2(10)" oncontextmenu="return false" />
 			<input type="button" value="Reverse Joint 2" onmousedown="buttonClickedBack()" onmouseup="buttonReleased()" oncontextmenu="return false"/><br/><br/>
 			<input type="button" value="Rotate Joint 3" onmousedown="joint3Clicked()" onmouseup="buttonReleased()" oncontextmenu="return false"/>
 			<input type="button" value="Reverse Joint 3" onmousedown="joint3ClickedBack()" onmouseup="buttonReleased()" oncontextmenu="return false"/><br/><br/>
 			<input type="button" value="Rotate Joint 5" onmousedown="joint5Clicked()" onmouseup="buttonReleased()" oncontextmenu="return false"/>
 			<input type="button" value="Reverse Joint 5" onmousedown="joint5ClickedBack()" onmouseup="buttonReleased()" oncontextmenu="return false"/><br/><br/>
-        </div>
+        </div> -->
 		<div id="robotWrapper" class="grid_6">
 			<canvas ref="myCanvas"  width="400" height="400">
-				<p>Your Browser Sucks, seriously, change it.</p>
+				<p>Canvas is not supporting in your Browser, change it.</p>
 			</canvas><br/>
 		</div>
 	</div>  
@@ -37,8 +37,12 @@ import joint6Img from '@/assets/armModel/joint6.png'
 import elbowImg from '@/assets/armModel/elbow.png'
 import armImg from '@/assets/armModel/arm.png'
 export default {
-    name: 'modelTest',
-	
+    name: 'RoboticArmDT',
+	props:{
+		j1: Number,
+		j2: Number,
+		j3: Number
+	},
     data: () => ({
         surface: null,
         base: new Image(),
@@ -61,15 +65,15 @@ export default {
         this.drawCanvas();
     },
     watch: {
-		angle2: function(val1){
-			this.myTimer = setInterval(this.rotateJ1(val1), 50);
+		j1: function(val1){
+			this.myTimer = setInterval(this.rotateJ1(parseInt(val1)), 50);
 		},
-		angle3: function(val3){
-			this.myTimer = setInterval(this.rotateJ3(val3), 50);
+		j2: function(val3){
+			this.myTimer = setInterval(this.rotateJ3(parseInt(val3)), 50);
 			// this.rotateJ3(val3);
 		},
-		angle5: function(val5){
-			this.myTimer = setInterval(this.rotateJ5(val5), 50);
+		j3: function(val5){
+			this.myTimer = setInterval(this.rotateJ5(parseInt(val5)), 50);
 		}
 		
     },

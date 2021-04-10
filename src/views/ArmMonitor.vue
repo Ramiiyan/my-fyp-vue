@@ -1,25 +1,26 @@
 <template>
   <v-container>
-    {{this.passChanges}}
-    <v-card class="e4">
-    <v-responsive
+    <!-- {{this.passChanges}} -->
+    
+    <!-- <v-responsive
       :style="{ background: `rgb(${red}, ${green}, ${blue})` }"
       height="300px"
-    ></v-responsive>
-
+    ></v-responsive> -->
+    <RoboticArmDT :j1="j1" :j2="j2" :j3="fe"/>
+    <v-card class="e4">
     <v-card-text>
       <v-container fluid>
         <v-row>
           <v-col cols="12">
             <v-slider
-              v-model="red"
+              v-model="base"
               :max="255"
-              label="R"
+              label="Base"
               class="align-center"
             >
               <template v-slot:append>
                 <v-text-field
-                  v-model="red"
+                  v-model="base"
                   class="mt-0 pt-0"
                   type="number"
                   style="width: 60px"
@@ -30,14 +31,14 @@
 
           <v-col cols="12">
             <v-slider
-              v-model="green"
+              v-model="j1"
               :max="255"
-              label="G"
+              label="j1"
               class="align-center"
             >
               <template v-slot:append>
                 <v-text-field
-                  v-model="green"
+                  v-model="j1"
                   class="mt-0 pt-0"
                   type="number"
                   style="width: 60px"
@@ -48,14 +49,31 @@
 
           <v-col cols="12">
             <v-slider
-              v-model="blue"
+              v-model="j2"
               :max="255"
-              label="B"
+              label="j2"
               class="align-center"
             >
               <template v-slot:append>
                 <v-text-field
-                  v-model="blue"
+                  v-model="j2"
+                  class="mt-0 pt-0"
+                  type="number"
+                  style="width: 60px"
+                ></v-text-field>
+              </template>
+            </v-slider>
+          </v-col>
+          <v-col cols="12">
+            <v-slider
+              v-model="fe"
+              :max="255"
+              label="Final Effector"
+              class="align-center"
+            >
+              <template v-slot:append>
+                <v-text-field
+                  v-model="fe"
                   class="mt-0 pt-0"
                   type="number"
                   style="width: 60px"
@@ -73,17 +91,20 @@
 <!--<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>-->
 <script>
 // import { Socket } from 'socket.io-client';
-
+import RoboticArmDT from '../components/RoboticArmDT.vue';
   
   export default {
-    name: 'HelloWorld',
-
+    name: 'ArmMonitor',
+    components:{
+        RoboticArmDT,
+    },
     data() {
       return {
-        mqtt_message:'',
-        red: 64,
-        green: 128,
-        blue: 0,
+        mqtt_message:null,
+        base:0,
+        j1: 0,
+        j2: 0,
+        fe: 0,
         
       }
     },
@@ -98,21 +119,23 @@
     // },
     created() { 
       this.connectWebsocket();
+      console.log("Monitor initiated.");
+      this.activateMonitor();
     },
     beforeDestroy() {
-      this.disconnectWebsocket(); 
+      // this.disconnectWebsocket(); 
     },
     computed:{
-      passChanges:function(){
-        var msg = '{"red" : "'+this.red + '", "Blue" : "'+this.blue +'", "Green" : "'+this.green+'"}';
-        // this.$socket.on('connect',()=> {
-        //   this.$socket.emit('on_publish', {data: 'data 1'});
-        // });
-        this.$socket.emit('my event', {data: msg});
+      // passChanges:function(){
+      //   var msg = '{"red" : "'+this.red + '", "Blue" : "'+this.blue +'", "Green" : "'+this.green+'"}';
+      //   // this.$socket.on('connect',()=> {
+      //   //   this.$socket.emit('on_publish', {data: 'data 1'});
+      //   // });
+      //   this.$socket.emit('my event', {data: msg});
         
-        console.log(msg);
-        return msg;
-      },
+      //   console.log(msg);
+      //   return msg;
+      // },
     },
     mounted(){
       //printing mqtt message.
@@ -122,10 +145,19 @@
           console.log(message.payload);
           if (message.payload) {
             this.mqtt_message = message.payload;
+            // console.log(message.payload["b"]);
+            this.j1 = parseInt(message.payload["b"]);
+            this.j2 = parseInt(message.payload["j2"]);
+            this.fe = parseInt(message.payload["fe"]);
           } 
         });
     },
     methods: {
+      activateMonitor(){
+        let control_mode = '{"action":"monitor","param":{"mac":"1119"}}'
+        this.$socket.emit('my event', {data: control_mode});
+        console.log(control_mode);
+      },
       connectWebsocket() { 
        
       //  this.socket = io.connect('http://localhost:5000');
@@ -134,14 +166,6 @@
           // this.$socket.emit('socket', "I'm connected from Vue!");
 
         });
-
-        // this.$socket.on('mqtt_message', (message) => { 
-        //   console.log(message);
-        //   console.log(message.payload);
-        //   if (message.payload) {
-        //     this.message = message.payload;
-        //   } 
-        // });
       }, 
       disconnectWebsocket() {
         if (this.$socket) {
