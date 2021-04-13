@@ -1,20 +1,20 @@
 <template>
   <div class="home">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <h2> Robotic arm Specification</h2>
+    <h2> Robotic arm Specification Form</h2>
     <v-form ref="specification">
     <v-container fluid>
     <v-row>
       <v-col class="d-flex" cols="8" sm="6">
         <v-select v-model="microC" :items="microCTypes" dense
-          label="Micro Controller" :rules="[rules.required]">
+          label="Microcontroller" :rules="[rules.required]">
         </v-select>
       </v-col>
     </v-row>
     <v-row>
       <v-col class="d-flex" cols="8" sm="6">
         <v-select v-model="comModule" :items="comModuleTypes" dense
-          label="Communcation Modules" :rules="[rules.required]">
+          label="Communication Module" :rules="[rules.required]">
         </v-select>
       </v-col>
       <!-- TX RX PINS -->
@@ -51,17 +51,12 @@
     <v-row>
       <v-col class="d-flex" cols="8" sm="6">
         <v-select v-model="dof" :items="dofTypes" dense
-          label="Degree Of Freedom" :rules="[rules.required]">
+          label="Degree of Freedom" :rules="[rules.required]">
         </v-select>
       </v-col>
     </v-row>
     <!-- EACH SERVO SETTINGS -->
     <v-row v-if="this.dof != null">
-      <!-- <DofRow 
-        :dofCount="this.selectedDof" 
-        :getDofRow="this.getDofRow"  
-        @sub-row="DofRowValues"
-      /> -->
       
       <v-row v-for="i in this.dof" :key="i">
         <v-col cols="2" dense>
@@ -128,7 +123,7 @@
     <div v-else></div>
     <!-- MQTT SETTINGS -->
     <v-card elevation="6" dense>
-      <v-row>
+      <v-row dense>
         <v-col cols="4" sm="4">
           <v-card-title>MQTT Settings</v-card-title>
         </v-col>
@@ -139,7 +134,7 @@
         </v-col>
       </v-row>
       <v-card-text v-if="!this.MQTT_default">
-        <v-row>
+        <v-row dense>
           <v-col class="d-flex" cols="6" sm="6">
             <v-text-field v-model="mqtt_config.host" label="Host"
               :rules="[rules.required]" required dense>
@@ -158,7 +153,9 @@
             </v-text-field>
           </v-col>
           <v-col class="d-flex" cols="6" sm="6">
-
+            <v-text-field v-model="mqtt_config.password" label="Password"
+              :rules="[rules.required]" required dense >
+            </v-text-field>
           </v-col>
         </v-row>
         <v-row>
@@ -180,7 +177,7 @@
     <br>
     <v-row>
       <v-col class="d-flex" cols="12" sm="6">
-        <v-btn v-on:click="submit"> submit </v-btn>
+        <v-btn color="submit" v-on:click="submit"> Generate Firmware </v-btn>
       </v-col>
     </v-row>
     </v-container>
