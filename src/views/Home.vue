@@ -104,24 +104,29 @@
     </v-row>
     <!-- WIFI SETTINGS -->
     <div v-if="this.comModule === 'WiFi'">
-      <h4>WiFi Settings</h4>
-      <v-col class="d-flex" cols="8" sm="6">
-        <v-text-field v-model="wifi.username" label="Wifi Username"
-            :rules="[rules.required]" required dense>
-        </v-text-field>
-      </v-col>
-      <v-col class="d-flex" cols="8" sm="6">
-        <v-text-field
-            v-model="wifi.password"
-            label="Wifi Password"
-            :rules="[rules.required]"
-            required
-            dense
-          ></v-text-field>
-      </v-col>
+      <v-card elevation="6" dense>
+      <v-card-title dense>WiFi Settings</v-card-title>
+      <v-card-text>
+        <v-row dense>
+          <v-col class="d-flex" cols="8" sm="6">
+            <v-text-field v-model="wifi.username" label="Wifi Username"
+                :rules="[rules.required]" required dense>
+            </v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="d-flex" cols="8" sm="6">
+            <v-text-field v-model="wifi.password" label="Wifi Password"
+               :rules="[rules.required]" required dense >
+            </v-text-field>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      </v-card>
     </div>
     <div v-else></div>
     <!-- MQTT SETTINGS -->
+    <div style="margin:20px;"></div>
     <v-card elevation="6" dense>
       <v-row dense>
         <v-col cols="4" sm="4">
@@ -199,10 +204,10 @@ export default {
     // getDofRow:false,
     // dofRowObj: null,
     dofRow: {
-      selected_type: ['Micro servo 9g','Micro servo 90S'],
+      selected_type: [],
       servo_range: {
-        min_range: [1,180],
-        max_range: [1,180]
+        min_range: [],
+        max_range: []
       },
     },
     wifi:{
