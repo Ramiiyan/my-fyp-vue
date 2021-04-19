@@ -180,9 +180,20 @@
       </v-card-text>
     </v-card>
     <br>
-    <v-row>
-      <v-col class="d-flex" cols="12" sm="6">
-        <v-btn color="submit" v-on:click="submit"> Generate Firmware </v-btn>
+    <v-row align="center">
+      <v-col class="d-flex" cols="12" sm="12">
+        <v-btn color="primary"
+          large
+          :loading="btnloader" 
+          :disabled="btnloader" 
+          v-on:click="submit"> 
+          Generate Firmware 
+          <template v-slot:btnloader>
+            <span class="custom-loader">
+              <v-icon light>mdi-cached</v-icon>
+            </span>
+          </template>
+        </v-btn>
       </v-col>
     </v-row>
     </v-container>
@@ -197,6 +208,7 @@
 export default {
   name: 'Home',
   data: () => ({
+    btnloader: false,
     microC: "ESP WROOM32 DEV KIT",
     dof: null,
     comModule: "SIMCOM 7000",
@@ -250,16 +262,14 @@ export default {
   // },
   methods:{
     async sendRovoSpecs(url, msg) {
-      //  return await this.axios.post(url,msg)
-      //   .then(response => {
-      //     console.log(response);
-      //   });
+      this.btnloader = true;
       return await this.axios({
         url: url,
         method: 'POST',
         responseType: 'arraybuffer',
         data: msg,
       }).then((res) =>{
+        this.btnloader = false;
         let data = res.data;
         console.log(res);
         const blob = new Blob([data], { type: 'application/zip' });

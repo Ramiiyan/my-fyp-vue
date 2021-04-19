@@ -1,91 +1,81 @@
 <template>
   <v-container>
     <!-- {{this.passChanges}} -->
-    
-    <!-- <v-responsive
-      :style="{ background: `rgb(${red}, ${green}, ${blue})` }"
-      height="300px"
-    ></v-responsive> -->
-    <RoboticArmDT :j1="j1" :j2="j2" :j3="fe"/>
-    <v-card class="e4">
+    <h4> MQTT MSG: {{this.mqtt_message}}</h4>
+    <v-card class="e2">
     <v-card-text>
       <v-container fluid>
         <v-row>
+        <v-col cols="6">
+        <v-row>
           <v-col cols="12">
-            <v-slider
-              v-model="base"
-              :max="255"
-              label="Base"
-              class="align-center"
-            >
-              <template v-slot:append>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>Base </v-subheader>
+              </v-col>
+              <v-col cols="8">
                 <v-text-field
                   v-model="base"
                   class="mt-0 pt-0"
                   type="number"
-                  style="width: 60px"
                 ></v-text-field>
-              </template>
-            </v-slider>
+              </v-col>
+            </v-row>
           </v-col>
 
           <v-col cols="12">
-            <v-slider
-              v-model="j1"
-              :max="255"
-              label="j1"
-              class="align-center"
-            >
-              <template v-slot:append>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>Joint 1</v-subheader>
+              </v-col>
+              <v-col cols="8">
                 <v-text-field
                   v-model="j1"
                   class="mt-0 pt-0"
                   type="number"
-                  style="width: 60px"
                 ></v-text-field>
-              </template>
-            </v-slider>
+              </v-col>
+            </v-row>
           </v-col>
 
           <v-col cols="12">
-            <v-slider
-              v-model="j2"
-              :max="255"
-              label="j2"
-              class="align-center"
-            >
-              <template v-slot:append>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>Joint 2</v-subheader>
+              </v-col>
+              <v-col cols="8">
                 <v-text-field
                   v-model="j2"
                   class="mt-0 pt-0"
                   type="number"
-                  style="width: 60px"
                 ></v-text-field>
-              </template>
-            </v-slider>
+              </v-col>
+            </v-row>
           </v-col>
           <v-col cols="12">
-            <v-slider
-              v-model="fe"
-              :max="255"
-              label="Final Effector"
-              class="align-center"
-            >
-              <template v-slot:append>
+            <v-row>
+              <v-col cols="4">
+                <v-subheader>Final Effector</v-subheader>
+              </v-col>
+              <v-col cols="8">
                 <v-text-field
                   v-model="fe"
                   class="mt-0 pt-0"
                   type="number"
-                  style="width: 60px"
                 ></v-text-field>
-              </template>
-            </v-slider>
+              </v-col>
+            </v-row>
           </v-col>
+        </v-row>
+        </v-col>
+        <v-col cols="6"> 
+          <RoboticArmDT :j1="j1" :j2="j2" :j3="fe"/>
+        </v-col>
         </v-row>
       </v-container>
     </v-card-text>
   </v-card>
-    <h4> MQTT MSG: {{this.mqtt_message}}</h4>
+    
   </v-container>
 </template>
 <!--<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>-->
