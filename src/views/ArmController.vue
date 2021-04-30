@@ -87,7 +87,7 @@
       </v-container>
     </v-card-text>
   </v-card>
-  <!-- {{this.publishEvent}} -->
+  Control Raw Data : {{this.publishEvent}}
   </div>
 </template>
 
