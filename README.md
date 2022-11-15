@@ -1,5 +1,7 @@
 # my-fyp-vue
 
+## Version 2.0
+
 ## Project setup
 ```
 yarn install
