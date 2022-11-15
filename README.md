@@ -1,6 +1,6 @@
 # my-fyp-vue
 
-## Version 2.0
+## Version 1.0 (Initial Version)
 
 ## Project setup
 ```
